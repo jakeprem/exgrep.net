@@ -13,18 +13,18 @@ services:
     restart: unless-stopped
 
   livegrep-frontend:
-    image: ghcr.io/livegrep/livegrep/base:latest
+    image: ghcr.io/livegrep/livegrep/indexer:latest
     command:
       - /livegrep/bin/livegrep
-      # - -listen
-      # - 0.0.0.0:8910
-      # - -connect
-      # - livegrep-backend:9898
+      - -listen
+      - 0.0.0.0:8910
+      - -connect
+      - livegrep-backend:9898
       - -docroot
       - /livegrep/web
-      # - -index-config
-      # - data/livegrep.json
-      - ./conf/livegrep.json
+      - -index-config
+      - data/livegrep.json
+      # - ./conf/livegrep.json
     volumes:
       - exgrep-data:/data
       - type: bind
