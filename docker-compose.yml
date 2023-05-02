@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   livegrep-backend:
-    image: ghcr.io/livegrep/livegrep/base:latest
+    image: ghcr.io/jakeprem/livegrep/base:latest
     command:
       - "/livegrep/bin/codesearch"
       - "-grpc=0.0.0.0:9898"
@@ -13,7 +13,7 @@ services:
     restart: unless-stopped
 
   livegrep-frontend:
-    image: ghcr.io/livegrep/livegrep/indexer:latest
+    image: ghcr.io/jakeprem/livegrep/indexer:latest
     command:
       - /livegrep/bin/livegrep
       - -listen
