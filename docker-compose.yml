@@ -1,0 +1,48 @@
+version: "3.3"
+services:
+  livegrep-backend:
+    image: ghcr.io/livegrep/livegrep/base:latest
+    command:
+      - "/livegrep/bin/codesearch"
+      - "-grpc=0.0.0.0:9898"
+      - "-load_index=/data/index.idx"
+      # - "-debug=profile,index"
+      - "-threads=4"
+    volumes:
+      - exgrep-data:/data
+    restart: unless-stopped
+
+  livegrep-frontend:
+    image: ghcr.io/livegrep/livegrep/base:latest
+    command:
+      - /livegrep/bin/livegrep
+      # - -listen
+      # - 0.0.0.0:8910
+      # - -connect
+      # - livegrep-backend:9898
+      - -docroot
+      - /livegrep/web
+      # - -index-config
+      # - data/livegrep.json
+      - ./conf/livegrep.json
+    volumes:
+      - exgrep-data:/data
+      - type: bind
+        source: ./conf
+        target: /conf
+        read_only: true
+    restart: unless-stopped
+
+  tunnel:
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run --token ${TUNNEL_TOKEN}
+    # volumes:
+    #   - type: bind
+    #     source: ./cf-conf
+    #     target: /etc/cloudflared
+    #     read_only: true
+
+volumes:
+  exgrep-data:
+    name: exgrep-data

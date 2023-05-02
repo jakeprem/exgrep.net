@@ -1,0 +1,26 @@
+version: "3.3"
+services:
+  indexer:
+    image: ghcr.io/livegrep/livegrep/indexer:latest
+    command:
+       - /livegrep/bin/livegrep-github-reindex
+       - -http
+       - -dir=data/
+       - -out=data/index.idx
+       - -forks=false
+       - -org=elixir-lang
+       - -org=elixir-ecto
+       - -org=elixir-plug
+       - -org=absinthe-graphql
+       - -org=phoenixframework
+       - -org=ash-project
+       - -repo=mtrudel/bandit
+       - -repo=michalmuskala/jason
+       - -repo=sorentwo/oban
+
+    volumes:
+      - exgrep-data:/data
+
+volumes:
+  exgrep-data:
+    external: true

@@ -1,0 +1,12 @@
+{
+  "backends": [
+    {
+      "id": "exgrep",
+      "addr": "livegrep-backend:9898"
+    }
+  ],
+  "feedback": {
+    "mailto": "contact@exgrep.net"
+  },
+  "listen": "0.0.0.0:8910"
+}
